@@ -2,6 +2,7 @@ package com.github.diogodelima.authorizationserver.config
 
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.oauth2.core.AuthorizationGrantType
 import org.springframework.security.oauth2.core.ClientAuthenticationMethod
 import org.springframework.security.oauth2.core.oidc.OidcScopes
@@ -25,7 +26,7 @@ class ClientConfig {
     fun registeredClientRepository(): RegisteredClientRepository {
         val oidcClient = RegisteredClient.withId(UUID.randomUUID().toString())
             .clientId("oidc-client")
-            .clientSecret("{noop}secret")
+            .clientSecret(BCryptPasswordEncoder().encode("secret"))
             .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
             .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
             .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
@@ -37,5 +38,7 @@ class ClientConfig {
 
         return InMemoryRegisteredClientRepository(oidcClient)
     }
+
+
 
 }
