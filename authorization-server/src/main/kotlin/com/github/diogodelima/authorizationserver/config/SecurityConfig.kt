@@ -44,7 +44,8 @@ class SecurityConfig {
             .authorizeHttpRequests { request ->
                 request.anyRequest().authenticated()
             }
-            .csrf { it.disable() }
+            .csrf(Customizer.withDefaults())
+            .oauth2Login(Customizer.withDefaults())
             .formLogin(Customizer.withDefaults())
             .build()
     }
