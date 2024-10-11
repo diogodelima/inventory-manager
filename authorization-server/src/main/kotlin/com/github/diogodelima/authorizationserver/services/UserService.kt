@@ -14,7 +14,13 @@ class UserService(
 ): UserDetailsService {
 
     override fun loadUserByUsername(username: String?): User {
-        return userRepository.findByUsername(username) ?: throw UsernameNotFoundException(username)
+
+        val user = userRepository.findByUsername(username) ?: throw UsernameNotFoundException(username)
+
+        if (user.password == null)
+            throw UsernameNotFoundException(username)
+
+        return user
     }
 
 }
