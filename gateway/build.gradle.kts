@@ -4,7 +4,6 @@ plugins {
 	id("org.springframework.boot") version "3.3.4"
 	id("io.spring.dependency-management") version "1.1.6"
 }
-val springCloudVersion by extra("2023.0.3")
 
 group = "com.github.diogodelima"
 version = "0.0.1-SNAPSHOT"
@@ -19,25 +18,26 @@ repositories {
 	mavenCentral()
 }
 
+extra["springCloudVersion"] = "2023.0.3"
+
 dependencies {
-	implementation("org.springframework.boot:spring-boot-starter-oauth2-authorization-server")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
-	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-	implementation("org.springframework.cloud:spring-cloud-function-context")
+	implementation("org.springframework.cloud:spring-cloud-starter-gateway")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
-	runtimeOnly("org.postgresql:postgresql")
+	testImplementation("org.springframework.security:spring-security-test")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+}
+
+dependencyManagement {
+	imports {
+		mavenBom("org.springframework.cloud:spring-cloud-dependencies:${property("springCloudVersion")}")
+	}
 }
 
 kotlin {
 	compilerOptions {
 		freeCompilerArgs.addAll("-Xjsr305=strict")
-	}
-}
-dependencyManagement {
-	imports {
-		mavenBom("org.springframework.cloud:spring-cloud-dependencies:$springCloudVersion")
 	}
 }
 

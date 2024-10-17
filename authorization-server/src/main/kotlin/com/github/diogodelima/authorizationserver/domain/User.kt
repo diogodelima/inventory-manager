@@ -17,7 +17,8 @@ data class User(
     val username: String = "",
 
     @get:JvmName("password")
-    val password: String? = null
+    @Column(nullable = false)
+    val password: String = ""
 
 ): UserDetails {
 
@@ -25,7 +26,7 @@ data class User(
         return mutableListOf()
     }
 
-    override fun getPassword(): String? {
+    override fun getPassword(): String {
         return password
     }
 

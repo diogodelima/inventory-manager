@@ -2,7 +2,6 @@ package com.github.diogodelima.usersservice.controller
 
 import com.github.diogodelima.usersservice.domain.User
 import com.github.diogodelima.usersservice.dto.UserRegisterDto
-import com.github.diogodelima.usersservice.dto.UserRegisterWithGoogleDto
 import com.github.diogodelima.usersservice.exceptions.UserNotFoundException
 import com.github.diogodelima.usersservice.services.UserService
 import jakarta.validation.Valid
@@ -20,20 +19,9 @@ class UserController(
 
 ) {
 
-    @PostMapping("/register/google")
-    fun registerWithGoogle(@RequestBody @Valid dto: UserRegisterWithGoogleDto): ResponseEntity<Any> {
-
-        val user = userService.save(
-            User(
-                email = dto.email,
-                username = dto.username,
-                googleId = dto.googleId
-            )
-        )
-
-        return ResponseEntity
-            .status(HttpStatus.CREATED)
-            .build()
+    @GetMapping("/hello")
+    fun hello(): String {
+        return "Hello from Users Service!"
     }
 
     @PostMapping("/register")

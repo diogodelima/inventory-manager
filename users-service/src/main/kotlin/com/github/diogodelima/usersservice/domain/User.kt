@@ -16,15 +16,6 @@ data class User(
     @Column(nullable = false, unique = true)
     val username: String,
 
-    @Column(unique = true)
-    val googleId: String? = null,
+    val password: String,
 
-    val password: String? = null,
-
-) {
-
-    init {
-        require(googleId != null || password != null) { "Password or Google ID must be set" }
-    }
-
-}
+)
