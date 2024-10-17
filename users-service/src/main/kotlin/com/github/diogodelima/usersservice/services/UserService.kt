@@ -15,6 +15,8 @@ class UserService(
 
     fun getByEmail(email: String) = userRepository.findByEmail(email)
 
+    fun getByUsernameOrEmail(param: String) = userRepository.findByUsername(param) ?: userRepository.findByEmail(param)
+
     fun save(user: User) = userRepository.save(user)
 
 }

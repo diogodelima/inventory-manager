@@ -1,5 +1,7 @@
 package com.github.diogodelima.usersservice.exceptions.handler
 
+import com.github.diogodelima.usersservice.dto.ApiResponseDto
+import com.github.diogodelima.usersservice.exceptions.UserAlreadyExistsException
 import com.github.diogodelima.usersservice.exceptions.UserNotFoundException
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
@@ -14,7 +16,12 @@ class ExceptionHandler : ResponseEntityExceptionHandler() {
 
     @ExceptionHandler(UserNotFoundException::class)
     fun handleNotFound(ex: Exception, request: WebRequest): ResponseEntity<Any>? {
-        return handleExceptionInternal(ex, ex.message, HttpHeaders(), HttpStatus.NOT_FOUND, request)
+        return handleExceptionInternal(ex, ApiResponseDto<Any>(message = ex.message), HttpHeaders(), HttpStatus.NOT_FOUND, request)
+    }
+
+    @ExceptionHandler(UserAlreadyExistsException::class)
+    fun handleConflict(ex: Exception, request: WebRequest): ResponseEntity<Any>? {
+        return handleExceptionInternal(ex, ApiResponseDto<Any>(message = ex.message), HttpHeaders(), HttpStatus.CONFLICT, request)
     }
 
 }

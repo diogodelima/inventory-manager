@@ -1,7 +1,10 @@
 package com.github.diogodelima.usersservice.controller
 
 import com.github.diogodelima.usersservice.domain.User
+import com.github.diogodelima.usersservice.dto.ApiResponseDto
+import com.github.diogodelima.usersservice.dto.UserDto
 import com.github.diogodelima.usersservice.dto.UserRegisterDto
+import com.github.diogodelima.usersservice.exceptions.UserAlreadyExistsException
 import com.github.diogodelima.usersservice.exceptions.UserNotFoundException
 import com.github.diogodelima.usersservice.services.UserService
 import jakarta.validation.Valid
@@ -25,7 +28,10 @@ class UserController(
     }
 
     @PostMapping("/register")
-    fun register(@RequestBody @Valid dto: UserRegisterDto): ResponseEntity<Any> {
+    fun register(@RequestBody @Valid dto: UserRegisterDto): ResponseEntity<ApiResponseDto<UserDto>> {
+
+        if (userService.getByEmail(dto.email) != null && userService.getByUsername(dto.username) != null)
+            throw UserAlreadyExistsException()
 
         val user = userService.save(
             User(
@@ -37,15 +43,29 @@ class UserController(
 
         return ResponseEntity
             .status(HttpStatus.CREATED)
-            .build()
+            .body(
+                ApiResponseDto(
+                    message = "User created successfully.",
+                    response = UserDto(user)
+                )
+            )
+
     }
 
     @GetMapping("/{param}")
-    fun getByEmailOrUsername(@PathVariable param: String): ResponseEntity<Any> {
+    fun getByEmailOrUsername(@PathVariable param: String): ResponseEntity<ApiResponseDto<UserDto>> {
 
-        val user = userService.getByEmail(param) ?: userService.getByUsername(param) ?: throw UserNotFoundException()
+        val user = userService.getByUsernameOrEmail(param) ?: throw UserNotFoundException()
 
-        return ResponseEntity.ok().build()
+        return ResponseEntity
+            .ok()
+            .body(
+                ApiResponseDto(
+                    message = "User retrieved successfully.",
+                    response = UserDto(user)
+                )
+            )
+
     }
 
 }
