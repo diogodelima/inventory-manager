@@ -1,4 +1,4 @@
-package com.github.diogodelima.usersservice.dto
+package com.github.diogodelima.productsservice.dto
 
 data class ApiResponseDto<T>(
 

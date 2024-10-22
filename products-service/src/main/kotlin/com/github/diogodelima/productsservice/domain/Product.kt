@@ -1,5 +1,6 @@
 package com.github.diogodelima.productsservice.domain
 
+import com.github.diogodelima.productsservice.dto.ProductDto
 import jakarta.persistence.*
 
 @Entity
@@ -14,6 +15,13 @@ data class Product(
     val name: String = "",
 
     @Column(nullable = false)
+    val description: String = "",
+
+    @Column(nullable = false)
     val price: Double = 0.0
 
-)
+) {
+
+    fun toDto() = ProductDto(id, name, description, price)
+
+}

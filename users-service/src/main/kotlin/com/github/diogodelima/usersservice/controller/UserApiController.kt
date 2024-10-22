@@ -33,7 +33,7 @@ class UserApiController(
             .body(
                 ApiResponseDto(
                     message = "User retrieved successfully.",
-                    response = UserDto(user)
+                    data = user.toDto()
                 )
             )
 

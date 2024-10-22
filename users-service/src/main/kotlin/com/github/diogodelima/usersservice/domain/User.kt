@@ -1,5 +1,6 @@
 package com.github.diogodelima.usersservice.domain
 
+import com.github.diogodelima.usersservice.dto.UserDto
 import jakarta.persistence.*
 
 @Entity
@@ -18,4 +19,8 @@ data class User(
 
     val password: String,
 
-)
+) {
+
+    fun toDto() = UserDto(id, email, username)
+
+}

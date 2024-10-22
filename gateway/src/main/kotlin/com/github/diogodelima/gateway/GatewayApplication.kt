@@ -22,7 +22,7 @@ class GatewayApplication {
 					.uri("http://localhost:8081/users")
 			}
 			.route("products_route") { route ->
-				route.path("/products/**")
+				route.path("/api/products/**")
 					.uri("http://localhost:8082")
 			}
 			.build()
