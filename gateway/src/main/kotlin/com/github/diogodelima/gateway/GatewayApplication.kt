@@ -17,10 +17,9 @@ class GatewayApplication {
 				route.path("/users/**")
 					.uri("http://localhost:8081/users")
 			}
-			.route("google_register_route") { route ->
-				route.path("/register/google")
-					.and().header("X-Forwarded-For", "127.0.0.1")
-					.uri("http://localhost:8081/users/register/google")
+			.route("users_api_route") { route ->
+				route.path("/api/users/**")
+					.uri("http://localhost:8081/users")
 			}
 			.route("products_route") { route ->
 				route.path("/products/**")

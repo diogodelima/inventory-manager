@@ -10,8 +10,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.web.SecurityFilterChain
 
-@Configuration
 @EnableWebSecurity
+@Configuration
 class SecurityConfig {
 
     @Bean
@@ -20,13 +20,13 @@ class SecurityConfig {
         return http
             .authorizeHttpRequests { request ->
                 request
-                    .requestMatchers(HttpMethod.POST, "/users/register").permitAll()
-                    .requestMatchers(HttpMethod.GET, "/users/hello").authenticated()
-                    .requestMatchers(HttpMethod.GET, "/users/*").permitAll()
+                    .requestMatchers(HttpMethod.GET, "/users/register").permitAll()
+                    .requestMatchers(HttpMethod.GET, "/api/users/hello").authenticated()
+                    .requestMatchers(HttpMethod.GET, "/api/users/*").permitAll()
                     .anyRequest().authenticated()
             }
             .csrf { it.disable() }
-            .oauth2ResourceServer { it.jwt(Customizer.withDefaults())}
+            .oauth2ResourceServer { it.jwt(Customizer.withDefaults()) }
             .build()
     }
 

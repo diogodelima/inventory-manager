@@ -45,6 +45,7 @@ class SecurityConfig {
             }
             .csrf(Customizer.withDefaults())
             .formLogin(Customizer.withDefaults())
+            .oauth2Login(Customizer.withDefaults())
             .build()
     }
 
