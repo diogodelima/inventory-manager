@@ -15,15 +15,15 @@ class GatewayApplication {
 		return builder.routes()
 			.route("users_route") { route ->
 				route.path("/users/**")
-					.uri("http://localhost:8081/users")
+					.uri("http://users-service:8081/users")
 			}
 			.route("users_api_route") { route ->
 				route.path("/api/users/**")
-					.uri("http://localhost:8081/users")
+					.uri("http://users-service:8081/users")
 			}
 			.route("products_route") { route ->
 				route.path("/api/products/**")
-					.uri("http://localhost:8082")
+					.uri("http://products-service:8082")
 			}
 			.build()
 

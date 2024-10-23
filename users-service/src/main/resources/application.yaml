@@ -1,6 +1,7 @@
 server:
   port: 8081
 
+
 spring:
   application:
     name: users-service
@@ -18,4 +19,4 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: http://localhost:9000
+          issuer-uri: http://authorization-server:9000
