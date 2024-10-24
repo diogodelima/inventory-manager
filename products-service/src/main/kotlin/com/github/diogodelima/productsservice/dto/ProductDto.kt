@@ -1,5 +1,8 @@
 package com.github.diogodelima.productsservice.dto
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class ProductDto(
 
     val id: Int,
@@ -7,6 +10,8 @@ data class ProductDto(
     val name: String,
 
     val description: String,
+
+    val date: Long,
 
     val price: Double
 

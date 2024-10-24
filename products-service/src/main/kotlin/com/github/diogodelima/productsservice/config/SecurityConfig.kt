@@ -19,6 +19,7 @@ class SecurityConfig {
             .authorizeHttpRequests { request ->
                 request
                     .requestMatchers(HttpMethod.GET, "/api/products/*").permitAll()
+                    .requestMatchers(HttpMethod.GET, "/api/products/page/*").permitAll()
                     .anyRequest().authenticated()
             }
             .csrf { it.disable() }

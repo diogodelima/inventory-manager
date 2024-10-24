@@ -4,6 +4,7 @@ import com.github.diogodelima.productsservice.domain.Product
 import com.github.diogodelima.productsservice.dto.ApiResponseDto
 import com.github.diogodelima.productsservice.dto.ProductCreateDto
 import com.github.diogodelima.productsservice.dto.ProductDto
+import com.github.diogodelima.productsservice.dto.ProductPageDto
 import com.github.diogodelima.productsservice.exceptions.ProductNotFoundException
 import com.github.diogodelima.productsservice.services.ProductService
 import jakarta.validation.Valid
@@ -68,6 +69,29 @@ class ProductApiController(
         productService.delete(id)
         return ResponseEntity
             .ok(ApiResponseDto(message = "Product deleted successfully"))
+    }
+
+    @GetMapping("/page/{page}")
+    fun list(
+        @PathVariable page: Int,
+        @RequestParam(required = false) sort: Product.Sort = Product.Sort.LOWEST_PRICE
+    ): ResponseEntity<ApiResponseDto<ProductPageDto>> {
+
+        val pageable = productService.getAll(page - 1, sort)
+
+        return ResponseEntity
+            .ok(
+                ApiResponseDto(
+                    message = "Page retrieved successfully",
+                    data = ProductPageDto(
+                        currentPage = pageable.number + 1,
+                        totalPages = pageable.totalPages,
+                        pageSize = pageable.size,
+                        products = pageable.toList().map { it.toDto() }
+                    )
+                )
+            )
+
     }
 
     @GetMapping("/{id}")
