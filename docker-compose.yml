@@ -36,6 +36,12 @@ services:
       - network
     env_file:
       - .env
+  orders-service:
+    build: ./orders-service
+    networks:
+      - network
+    env_file:
+      - .env
 
 networks:
   network:
