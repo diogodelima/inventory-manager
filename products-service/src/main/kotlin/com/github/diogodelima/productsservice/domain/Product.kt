@@ -1,6 +1,5 @@
 package com.github.diogodelima.productsservice.domain
 
-import com.github.diogodelima.productsservice.dto.ProductDto
 import jakarta.persistence.*
 import org.springframework.data.domain.Sort.Direction
 import java.time.Instant
@@ -26,8 +25,6 @@ data class Product(
     val date: Instant = Instant.now()
 
 ) {
-
-    fun toDto() = ProductDto(id, name, description, date.toEpochMilli(), price)
 
     enum class Sort(
 

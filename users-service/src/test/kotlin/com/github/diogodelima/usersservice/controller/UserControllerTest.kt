@@ -10,7 +10,7 @@ import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.get
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
 
-class UserApiControllerTest {
+class UserControllerTest {
 
     private lateinit var mockMvc: MockMvc
     private lateinit var userService: UserService
@@ -19,7 +19,7 @@ class UserApiControllerTest {
     fun setup() {
         userService = Mockito.mock(UserService::class.java)
 
-        val userController = UserApiController(userService)
+        val userController = UserController(userService)
 
         mockMvc = MockMvcBuilders
             .standaloneSetup(userController)

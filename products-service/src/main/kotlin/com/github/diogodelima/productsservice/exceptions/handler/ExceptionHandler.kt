@@ -2,6 +2,8 @@ package com.github.diogodelima.productsservice.exceptions.handler
 
 import com.github.diogodelima.productsservice.exceptions.ProductNotFoundException
 import com.github.diogodelima.productsservice.dto.ApiResponseDto
+import com.github.diogodelima.productsservice.exceptions.ProductAlreadyExistsException
+import com.github.diogodelima.productsservice.exceptions.ProductIdException
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -11,11 +13,26 @@ import org.springframework.web.context.request.WebRequest
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler
 
 @ControllerAdvice
-class ExceptionHandler : ResponseEntityExceptionHandler() {
+class ExceptionHandler {
 
     @ExceptionHandler(ProductNotFoundException::class)
-    fun handleNotFound(ex: Exception, request: WebRequest): ResponseEntity<Any>? {
-        return handleExceptionInternal(ex, ApiResponseDto<Any>(message = ex.message), HttpHeaders(), HttpStatus.NOT_FOUND, request)
-    }
+    fun handleNotFound(ex: Exception): ResponseEntity<ApiResponseDto<Any>> =
+        ResponseEntity
+            .status(HttpStatus.NOT_FOUND)
+            .body(
+                ApiResponseDto(
+                    message = ex.message
+                )
+            )
+
+    @ExceptionHandler(ProductIdException::class, ProductAlreadyExistsException::class)
+    fun handleBadRequest(ex: Exception): ResponseEntity<ApiResponseDto<Any>> =
+        ResponseEntity
+            .status(HttpStatus.BAD_REQUEST)
+            .body(
+                ApiResponseDto(
+                    message = ex.message
+                )
+            )
 
 }

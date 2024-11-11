@@ -20,9 +20,8 @@ class SecurityConfig {
         return http
             .authorizeHttpRequests { request ->
                 request
-                    .requestMatchers(HttpMethod.GET, "/users/register").permitAll()
-                    .requestMatchers(HttpMethod.GET, "/api/users/hello").authenticated()
-                    .requestMatchers(HttpMethod.GET, "/api/users/*").permitAll()
+                    .requestMatchers(HttpMethod.GET, "/users/hello").authenticated()
+                    .requestMatchers(HttpMethod.GET, "/users/*").permitAll()
                     .anyRequest().authenticated()
             }
             .csrf { it.disable() }

@@ -5,7 +5,6 @@ import com.github.diogodelima.productsservice.dto.ApiResponseDto
 import com.github.diogodelima.productsservice.dto.ProductCreateDto
 import com.github.diogodelima.productsservice.dto.ProductDto
 import com.github.diogodelima.productsservice.dto.ProductPageDto
-import com.github.diogodelima.productsservice.exceptions.ProductNotFoundException
 import com.github.diogodelima.productsservice.services.ProductService
 import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
@@ -13,8 +12,8 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@RequestMapping("/api/products")
-class ProductApiController(
+@RequestMapping("/products")
+class ProductController(
 
     private val productService: ProductService
 
@@ -23,12 +22,10 @@ class ProductApiController(
     @PostMapping
     fun create(@RequestBody @Valid dto: ProductCreateDto): ResponseEntity<ApiResponseDto<ProductDto>> {
 
-        val product = productService.save(
-            Product(
-                name = dto.name,
-                description = dto.description,
-                price = dto.price
-            )
+        val product = productService.create(
+            name = dto.name,
+            description = dto.description,
+            price = dto.price
         )
 
         return ResponseEntity
@@ -42,24 +39,17 @@ class ProductApiController(
     @PutMapping
     fun update(@RequestBody @Valid dto: ProductCreateDto): ResponseEntity<ApiResponseDto<ProductDto>> {
 
-        if (dto.id <= 0)
-            return ResponseEntity.badRequest().body(
-                ApiResponseDto(message = "Id should be grater than 0")
-            )
-
-        val product = productService.save(
-            Product(
-                id = dto.id,
-                name = dto.name,
-                description = dto.description,
-                price = dto.price
-            )
+        val product = productService.update(
+            id = dto.id,
+            name = dto.name,
+            description = dto.description,
+            price = dto.price
         )
 
         return ResponseEntity
             .status(HttpStatus.CREATED)
             .body(
-                ApiResponseDto(message = "Product created or updated successfully", data = product.toDto())
+                ApiResponseDto(message = "Product updated successfully", data = product.toDto())
             )
 
     }
@@ -97,7 +87,7 @@ class ProductApiController(
     @GetMapping("/{id}")
     fun get(@PathVariable id: Int): ResponseEntity<ApiResponseDto<ProductDto>> {
 
-        val product = productService.getById(id) ?: throw ProductNotFoundException()
+        val product = productService.getById(id)
 
         return ResponseEntity
             .ok(
@@ -107,3 +97,11 @@ class ProductApiController(
     }
 
 }
+
+private fun Product.toDto() = ProductDto(
+    id = this.id,
+    name = this.name,
+    description = this.description,
+    price = this.price,
+    date = this.date.toEpochMilli()
+)
