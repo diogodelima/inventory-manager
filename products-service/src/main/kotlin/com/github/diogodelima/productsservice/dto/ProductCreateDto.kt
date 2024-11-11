@@ -5,8 +5,6 @@ import jakarta.validation.constraints.NotNull
 
 data class ProductCreateDto(
 
-    val id: Int = 0,
-
     @field:NotBlank
     val name: String,
 

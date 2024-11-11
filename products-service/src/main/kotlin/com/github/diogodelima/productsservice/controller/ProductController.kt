@@ -36,19 +36,18 @@ class ProductController(
 
     }
 
-    @PutMapping
-    fun update(@RequestBody @Valid dto: ProductCreateDto): ResponseEntity<ApiResponseDto<ProductDto>> {
+    @PutMapping("/{id}")
+    fun update(@PathVariable id: Int, @RequestBody @Valid dto: ProductCreateDto): ResponseEntity<ApiResponseDto<ProductDto>> {
 
         val product = productService.update(
-            id = dto.id,
+            id = id,
             name = dto.name,
             description = dto.description,
             price = dto.price
         )
 
         return ResponseEntity
-            .status(HttpStatus.CREATED)
-            .body(
+            .ok(
                 ApiResponseDto(message = "Product updated successfully", data = product.toDto())
             )
 

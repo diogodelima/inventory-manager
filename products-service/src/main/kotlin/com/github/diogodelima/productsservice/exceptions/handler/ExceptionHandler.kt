@@ -2,7 +2,6 @@ package com.github.diogodelima.productsservice.exceptions.handler
 
 import com.github.diogodelima.productsservice.exceptions.ProductNotFoundException
 import com.github.diogodelima.productsservice.dto.ApiResponseDto
-import com.github.diogodelima.productsservice.exceptions.ProductAlreadyExistsException
 import com.github.diogodelima.productsservice.exceptions.ProductIdException
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
@@ -25,7 +24,7 @@ class ExceptionHandler {
                 )
             )
 
-    @ExceptionHandler(ProductIdException::class, ProductAlreadyExistsException::class)
+    @ExceptionHandler(ProductIdException::class)
     fun handleBadRequest(ex: Exception): ResponseEntity<ApiResponseDto<Any>> =
         ResponseEntity
             .status(HttpStatus.BAD_REQUEST)

@@ -1,7 +1,6 @@
 package com.github.diogodelima.productsservice.services
 
 import com.github.diogodelima.productsservice.domain.Product
-import com.github.diogodelima.productsservice.exceptions.ProductAlreadyExistsException
 import com.github.diogodelima.productsservice.exceptions.ProductIdException
 import com.github.diogodelima.productsservice.exceptions.ProductNotFoundException
 import com.github.diogodelima.productsservice.repositories.ProductRepository
@@ -33,8 +32,8 @@ class ProductService(
         if (id <= 0)
             throw ProductIdException()
 
-        if (productRepository.findById(id).isPresent)
-            throw ProductAlreadyExistsException()
+        if (productRepository.findById(id).isEmpty)
+            throw ProductNotFoundException()
 
         return productRepository.save(
             Product(
