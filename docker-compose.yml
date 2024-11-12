@@ -42,6 +42,12 @@ services:
       - network
     env_file:
       - .env
+  inventories-service:
+    build: ./inventories-service
+    networks:
+      - network
+    env_file:
+      - .env
 
 networks:
   network:
