@@ -18,10 +18,10 @@ data class Inventory(
 
 ) {
 
-    fun isInStock(productId: Int, amount: Int) = this.items.any { it.productId == productId && it.quantity >= amount }
+    fun isInStock(productId: Int, amount: Int) = this.items.any { it.id.productId == productId && it.quantity >= amount }
 
-    fun getItem(productId: Int) = this.items.first { it.productId == productId }
+    fun getItem(productId: Int) = this.items.first { it.id.productId == productId }
 
-    fun getItemQuantity(productId: Int): Int = this.items.firstOrNull { it.productId == productId }?.quantity ?: 0
+    fun getItemQuantity(productId: Int): Int = this.items.firstOrNull { it.id.productId == productId }?.quantity ?: 0
 
 }

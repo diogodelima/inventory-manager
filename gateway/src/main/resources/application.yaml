@@ -4,3 +4,8 @@ server:
 spring:
   application:
     name: gateway
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://authorization-server:9000

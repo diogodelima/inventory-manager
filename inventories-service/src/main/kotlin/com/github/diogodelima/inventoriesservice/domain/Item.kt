@@ -6,14 +6,21 @@ import jakarta.persistence.*
 @Table(name = "items")
 data class Item(
 
-    @Id
-    val productId: Int,
+    @EmbeddedId
+    val id: ItemId,
 
+    @Column(nullable = false)
     val quantity: Int,
 
-    @Id
     @ManyToOne
+    @MapsId("inventoryId")
     @JoinColumn(name = "inventory_id", referencedColumnName = "id")
     val inventory: Inventory
 
+)
+
+@Embeddable
+data class ItemId(
+    val productId: Int,
+    val inventoryId: Int
 )

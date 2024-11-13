@@ -19,6 +19,16 @@ class ProductController(
 
 ) {
 
+    @GetMapping("/secure")
+    fun secure(): String {
+        return "secure"
+    }
+
+    @GetMapping("/free")
+    fun free(): String {
+        return "free"
+    }
+
     @PostMapping
     fun create(@RequestBody @Valid dto: ProductCreateDto): ResponseEntity<ApiResponseDto<ProductDto>> {
 

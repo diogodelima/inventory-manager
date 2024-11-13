@@ -1,6 +1,7 @@
 package com.github.diogodelima.inventoriesservice.services
 
 import com.github.diogodelima.inventoriesservice.domain.Item
+import com.github.diogodelima.inventoriesservice.domain.ItemId
 import com.github.diogodelima.inventoriesservice.exceptions.InsufficientStockException
 import com.github.diogodelima.inventoriesservice.exceptions.InventoryNotFoundException
 import com.github.diogodelima.inventoriesservice.repository.InventoryRepository
@@ -29,7 +30,10 @@ class InventoryService(
 
         itemRepository.save(
             Item(
-                productId = productId,
+                id = ItemId(
+                    productId = productId,
+                    inventoryId = inventory.id
+                ),
                 quantity = item.quantity - quantity,
                 inventory = inventory
             )
@@ -47,7 +51,10 @@ class InventoryService(
 
         itemRepository.save(
             Item(
-                productId = productId,
+                id = ItemId(
+                    productId = productId,
+                    inventoryId = inventory.id
+                ),
                 quantity = finalQuantity,
                 inventory = inventory
             )
